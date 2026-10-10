@@ -1,0 +1,512 @@
+/* =====================================================================
+   CV STYLESHEET - Zeeshan Hafeez
+   Everything you may want to change is in the ONE :root block below.
+   (colors, font sizes, spacing, border radius, element sizes)
+   ===================================================================== */
+
+:root {
+  /* ---------- COLORS ---------- */
+  --color-page: #e6e6e6;            /* page background behind the CV */
+  --color-sidebar: #444444;         /* left sidebar */
+  --color-header: #228B22;          /* arrow header band (keep different from sidebar so the arrow shows) */
+  --color-white: #ffffff;
+  --color-link-blue: #00fff7;                /* links in the content area */
+  --color-ink: #333333;             /* headings, dark text */
+  --color-text: #777777;            /* normal text */
+  --color-text-soft: #555555;       /* company names, skill bars */
+  --color-line: #d9d9d9;            /* thin divider lines */
+  --color-on-dark: #f1f1f1;         /* text on dark backgrounds */
+  --color-on-dark-line: rgba(255, 255, 255, 0.28);
+  --color-btn-hover: #222222;
+  --color-ring: #ff02ab;            /* language ring (filled part) */
+  --color-ring-track: #e2e2e2;      /* language ring (empty part) */
+  --color-hobby-icon: #5dff06;      /* hobby icons */
+
+  /* ---------- FONTS ---------- */
+  --font-body: "Lato", Arial, sans-serif;
+  --font-heading: "Oswald", sans-serif;
+
+  /* ---------- FONT SIZES ---------- */
+  --fs-2xs: 9.5px;
+  --fs-xs: 11px;
+  --fs-sm: 11.5px;
+  --fs-md: 12px;
+  --fs-lg: 13px;
+  --fs-xl: 14px;
+  --fs-name: 38px;
+
+  /* ---------- SPACING ---------- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 18px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* ---------- BORDER RADIUS ---------- */
+  --radius-sm: 4px;
+  --radius-pill: 30px;              /* buttons */
+  --radius-round: 50%;              /* circles: photo, icons, rings */
+
+  /* ---------- SIZES ---------- */
+  --side-w: 32%;                    /* sidebar width */
+  --cv-max-w: 920px;
+  --tl-left-w: 140px;               /* timeline left column */
+  --photo-size: 130px;
+  --icon-btn-size: 38px;            /* round social buttons in footer */
+  --contact-icon-size: 24px;        /* small icons in header */
+  --arrow-depth: 64px;              /* V arrow ki gehrai (kam/zyada kar sakte ho) */               /* arrow point under the header */
+  --arrow-x: calc(var(--side-w) / 2); /* where the arrow sits (centre of sidebar) */
+  --ring-size: 64px;                /* language ring */
+  --ring-thickness: 8px;
+  --lang-item-w: 96px;
+  --hobby-icon-size: 22px;
+  --hobby-item-w: 76px;
+
+  /* ---------- SHADOWS ---------- */
+  --shadow-cv: 0 6px 30px rgba(0, 0, 0, 0.25);
+  --shadow-photo: 0 6px 18px rgba(0, 255, 60, 0.586);
+}
+
+/* ===== RESET ===== */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-page);
+  color: var(--color-text);
+  line-height: 1.5;
+  font-size: var(--fs-xl);
+}
+
+a { color: inherit; }
+svg { fill: currentColor; }
+
+/* ===== CV PAGE (grid: header on top, sidebar left, content right) ===== */
+.cv {
+  display: grid;
+  grid-template-columns: var(--side-w) 1fr;
+  grid-template-rows: auto 1fr;
+  max-width: var(--cv-max-w);
+  margin: var(--space-5) auto;
+  background: linear-gradient(to right, var(--color-sidebar) var(--side-w), var(--color-white) var(--side-w));
+  box-shadow: var(--shadow-cv);
+  min-height: 1100px;
+}
+
+/* =====================================================================
+   HEADER - coloured band with arrow point
+   ===================================================================== */
+.head {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: var(--side-w) 1fr;
+  align-items: center;
+  background: var(--color-header);
+  color: var(--color-white);
+    padding: var(--space-5) 0 calc(var(--space-5) + var(--arrow-depth));
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--arrow-depth)),
+    var(--side-w) calc(100% - var(--arrow-depth)),
+    var(--arrow-x) 100%,
+    0 calc(100% - var(--arrow-depth))
+  );
+}
+
+.head-photo { display: flex; justify-content: center; }
+
+.photo {
+  position: relative;
+  width: var(--photo-size);
+  height: var(--photo-size);
+  border-radius: var(--radius-round);
+  overflow: hidden;
+  background: var(--color-photo-bg);
+  box-shadow: inset var(--shadow-photo);
+}
+.photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.photo-ph {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font: 600 var(--fs-xl) / 1.3 var(--font-heading);
+  letter-spacing: 2px;
+  color: var(--color-white);
+}
+.photo.no-photo img { display: none; }
+.photo.no-photo .photo-ph { display: flex; }
+
+.head-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: 0 36px 0 26px;
+}
+
+.head h1 {
+  font: 600 var(--fs-name) / 1 var(--font-heading);
+  color: var(--color-white);
+  letter-spacing: 1px;
+}
+.job {
+  margin-top: var(--space-2);
+  font-size: var(--fs-xs);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--color-on-dark);
+}
+
+.contact { list-style: none; min-width: 215px; }
+.contact li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) 0 6px;
+  border-bottom: 1px solid var(--color-on-dark-line);
+  margin-bottom: var(--space-1);
+}
+.contact li:last-child { border-bottom: 0; }
+.contact .ico {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--contact-icon-size);
+  height: var(--contact-icon-size);
+  border-radius: var(--radius-round);
+  background: var(--color-white);
+  color: var(--color-header);
+}
+.contact .ico svg { width: 13px; height: 13px; }
+.contact .txt { font-size: var(--fs-xs); text-decoration: none; color: var(--color-on-dark); }
+.contact .txt:hover { color: var(--color-link-blue); text-decoration: underline; }
+/* For email addresses, we want to show the full email on hover, so we use a different class */
+.txt:hover { color: rgb(0, 81, 255); text-decoration: underline; }
+.contact small { font-size: var(--fs-2xs); opacity: 0.85; }
+
+/* =====================================================================
+   SIDEBAR
+   ===================================================================== */
+.side {
+  color: var(--color-white);
+  padding: var(--space-4) 22px var(--space-6) 28px;
+}
+
+.s-block {
+  padding-bottom: 22px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--color-on-dark-line);
+}
+.s-block:last-of-type { border-bottom: 0; }
+
+.side h2 {
+  font: 600 var(--fs-xl) / 1.2 var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--space-3);
+}
+.side p { font-size: var(--fs-lg); color: var(--color-on-dark); }
+
+.lbl { font-weight: 700; color: var(--color-white); }
+
+.link-list { list-style: none; }
+.link-list li { margin-bottom: var(--space-3); font-size: var(--fs-lg); word-break: break-word; }
+.link-list .lbl { display: block; }
+.link-list a { color: var(--color-on-dark); text-decoration: underline; }
+.link-list a:hover { color: var(--color-link-blue); }
+
+.detail { margin-bottom: 6px; }
+
+/* ----- HOBBIES (icons + text, wraps automatically) ----- */
+.hobbies {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-2);
+}
+.hobby {
+  flex: 0 0 var(--hobby-item-w);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+  font-size: var(--fs-xs);
+  line-height: 1.25;
+  color: var(--color-on-dark);
+}
+.hobby i { font-size: var(--hobby-icon-size); color: var(--color-hobby-icon); }
+
+/* ===== BUTTONS ===== */
+/* --- Core Button (Keeping your exact original shape & typography) --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 10px 18px;
+  background: var(--color-white);
+  color: var(--color-sidebar);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  text-decoration: none;
+  border-radius: var(--radius-pill); /* Kept exactly as requested */
+  
+  /* Luxury Upgrades for the Hover Foundation */
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Soft premium boundary line */
+  transition: color 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
+              box-shadow 0.5s ease, 
+              transform 0.4s ease;
+}
+
+/* Hardcoded override for when it's inside .content to keep baseline consistent */
+.content .btn { 
+  background: var(--color-sidebar); 
+  color: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: calc(var(--arrow-depth) * -1);
+}
+
+.btn svg { 
+  width: 16px; 
+  height: 16px; 
+  fill: currentColor;
+  position: relative;
+  z-index: 2;
+  transition: transform 0.4s ease;
+}
+
+/* --- The Luxury Hover Layer (Liquid Metallic Wave) --- */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 100%; /* Hidden just below the button */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #FF6700; /* Elegant, muted champange gold */
+  z-index: -1;
+  transition: top 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Custom tone for the inside-content variant if you prefer dark hover there */
+.content .btn::before {
+  background: #FF6700; /* Or change to #fff for a crisp white slide-up */
+}
+
+/* --- The Luxury Hover State --- */
+.btn:hover, .content .btn:hover { 
+  color: #ffffff; /* Smoothly changes text color as gold rises */
+  transform: translateY(-3px); /* Subtle premium lift */
+  box-shadow: 0 12px 24px rgba(197, 168, 128, 0.25); /* Gold tinted soft glow */
+}
+
+/* Triggers the gold liquid fill from the bottom up */
+.btn:hover::before, .content .btn:hover::before {
+  top: 0;
+}
+
+/* Micro-interaction for the CV download icon */
+.btn:hover svg {
+  transform: translateY(2px); /* Deliberate download nudge */
+}
+
+.round {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-btn-size);
+  height: var(--icon-btn-size);
+  border-radius: var(--radius-round);
+  background: var(--color-sidebar);
+  color: var(--color-white);
+  transition: transform 0.15s, background 0.15s;
+}
+.round svg { width: 18px; height: 18px; }
+.round:hover { transform: translateY(-2px); background: var(--color-btn-hover); }
+
+/* =====================================================================
+   MAIN CONTENT
+   ===================================================================== */
+.content { padding: var(--space-5) 36px var(--space-5) 26px; }
+
+.block { margin-bottom: 26px; }
+.block h2 {
+  font: 600 var(--fs-lg) / 1.2 var(--font-heading);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  letter-spacing: 0.4px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--color-ink);
+  margin-bottom: 16px;
+}
+
+/* ----- BLOCK TITLE (for blocks that don't have h2) ----- */
+.block-title {
+color: #2c8bff !important; /* Deep navy for a professional look */
+
+}
+
+/* ----- TIMELINE ----- */
+.tl {
+  display: grid;
+  grid-template-columns: var(--tl-left-w) 1fr;
+  gap: 0 20px;
+  margin-bottom: var(--space-1);
+  break-inside: avoid;
+}
+.tl .left { font-size: var(--fs-sm); padding-bottom: var(--space-4); }
+.tl .left strong { display: block; color: var(--color-text-soft); text-transform: uppercase; font-size: var(--fs-sm); line-height: 1.3; }
+.tl .left span { display: block; }
+
+.tl .right {
+  position: relative;
+  padding: 0 0 var(--space-4) var(--space-4);
+  border-left: 2px solid var(--color-ink);
+}
+.tl .right::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 3px;
+  width: 12px;
+  height: 12px;
+  border-radius: var(--radius-round);
+  background: var(--color-ink);
+}
+.tl:last-child .right { padding-bottom: 6px; }
+.tl:last-child .left { padding-bottom: 6px; }
+
+.tl h3 { font-size: var(--fs-xl); color: var(--color-ink); margin-bottom: 6px; line-height: 1.3; }
+.tl h3 em { font-style: normal; font-weight: 400; font-size: var(--fs-sm); color: var(--color-text); }
+.tl ul { list-style: none; }
+.tl li { font-size: var(--fs-md); margin-bottom: 2px; padding-left: var(--space-3); position: relative; }
+.tl li::before { content: "\2022"; position: absolute; left: 0; }
+
+/* ----- SKILLS (bars) ----- */
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3) var(--space-6); }
+.skill { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.3px; }
+.skill span { display: block; margin-bottom: var(--space-1); }
+.skill i { display: block; height: 4px; background: var(--color-text-soft); }
+
+/* ----- LANGUAGES (round progress rings) ----- */
+.langs { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-3); }
+.lang {
+  flex: 0 0 var(--lang-item-w);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 2px;
+}
+.lang b { font-size: var(--fs-md); color: var(--color-ink); margin-top: 6px; }
+.lang small { font-size: var(--fs-2xs); line-height: 1.25; }
+
+.ring {
+  width: var(--ring-size);
+  height: var(--ring-size);
+  border-radius: var(--radius-round);
+  background: conic-gradient(var(--color-ring) calc(var(--pct) * 1%), var(--color-ring-track) 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--ring-thickness)), #000 calc(100% - var(--ring-thickness) + 1px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - var(--ring-thickness)), #000 calc(100% - var(--ring-thickness) + 1px));
+}
+
+.plain { font-size: var(--fs-md); }
+.plain a { color: var(--color-ink); font-weight: 700; }
+
+/* ----- FOOTER ----- */
+.foot {
+  margin-top: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--color-ink);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: var(--fs-xs);
+}
+.foot-btns { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
+
+/* =====================================================================
+   MOBILE
+   ===================================================================== */
+@media (max-width: 780px) {
+    .content { padding: 26px 20px; margin-top: 0; }
+  :root { --arrow-x: 50%; }
+
+  .cv {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    margin: 0;
+    background: var(--color-white);
+    box-shadow: none;
+    min-height: 0;
+  }
+  .head {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
+    clip-path: none;
+  }
+  .head-main { flex-direction: column; align-items: flex-start; padding: 0 20px; }
+  .contact { width: 100%; }
+  .contact .txt { font-size: var(--fs-lg); }
+  .side { background: var(--color-sidebar); padding: 28px 22px; }
+  .content { padding: 26px 20px; }
+  .tl { grid-template-columns: 1fr; }
+  .tl .left { padding-bottom: 6px; padding-left: 20px; }
+  .tl .right { margin-left: 5px; }
+  .grid2 { grid-template-columns: 1fr; }
+  .foot { flex-direction: column; align-items: flex-start; }
+}
+
+/* =====================================================================
+   PRINT / SAVE AS PDF (A4)
+   ===================================================================== */
+@page { size: A4; margin: 0; }
+
+@media print {
+  :root {
+    --tl-left-w: 118px;
+    --photo-size: 110px;
+    --fs-name: 32px;
+  }
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { background: var(--color-white); font-size: var(--fs-md); }
+  .cv {
+    width: 210mm;
+    max-width: none;
+    margin: 0;
+    box-shadow: none;
+    min-height: 297mm;
+  }
+  .head { padding-top: 18px; }
+  .no-print { display: none !important; }
+  .side { padding: 14px 16px 20px 20px; }
+  .content { padding: 18px 24px 16px 18px; }
+  .block { margin-bottom: 14px; }
+  .tl li { font-size: 10.5px; }
+  .tl .left { font-size: 10px; }
+  .side p, .link-list li { font-size: var(--fs-xs); }
+  .foot { justify-content: center; }
+}
