@@ -453,6 +453,10 @@ color: #2c8bff !important; /* Deep navy for a professional look */
 @media (max-width: 780px) {
     .content { padding: 26px 20px; margin-top: 0; }
   :root { --arrow-x: 50%; }
+    .foot { flex-direction: column; align-items: stretch; text-align: center; padding-bottom: calc(var(--space-5) + env(safe-area-inset-bottom)); }
+  .foot-btns { width: 100%; justify-content: center; }
+  .foot-btns .btn { flex: 1 0 100%; justify-content: center; }
+  .side .btn { display: none; }
 
   .cv {
     grid-template-columns: 1fr;
