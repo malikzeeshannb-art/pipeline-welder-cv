@@ -66,6 +66,15 @@
   /* ---------- SHADOWS ---------- */
   --shadow-cv: 0 6px 30px rgba(0, 0, 0, 0.25);
   --shadow-photo: 0 6px 18px rgba(0, 255, 60, 0.586);
+
+    /* ---------- MOBILE HEADER (luxury dark) ---------- */
+  --hero-emerald: #0d4a37;
+  --hero-mid: #0b2620;
+  --hero-dark: #0c1113;
+  --hero-accent: #34d399;
+  --hero-panel: rgba(0, 0, 0, 0.32);
+  --hero-panel-line: rgba(52, 211, 153, 0.28);
+  --radius-card: 14px;
 }
 
 /* ===== RESET ===== */
@@ -450,13 +459,12 @@ color: #2c8bff !important; /* Deep navy for a professional look */
 /* =====================================================================
    MOBILE
    ===================================================================== */
-@media (max-width: 780px) {
-    .content { padding: 26px 20px; margin-top: 0; }
-  :root { --arrow-x: 50%; }
-    .foot { flex-direction: column; align-items: stretch; text-align: center; padding-bottom: calc(var(--space-5) + env(safe-area-inset-bottom)); }
-  .foot-btns { width: 100%; justify-content: center; }
-  .foot-btns .btn { flex: 1 0 100%; justify-content: center; }
-  .side .btn { display: none; }
+ @media (max-width: 780px) {
+  :root {
+    --arrow-x: 50%;
+    --photo-size: 96px;
+    --fs-name: 28px;
+  }
 
   .cv {
     grid-template-columns: 1fr;
@@ -466,22 +474,78 @@ color: #2c8bff !important; /* Deep navy for a professional look */
     box-shadow: none;
     min-height: 0;
   }
+
+  /* ----- HEADER ----- */
   .head {
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-    padding: var(--space-5) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 14px 16px;
     clip-path: none;
+    background:
+      radial-gradient(110% 70% at 0% 0%, rgba(52, 211, 153, 0.22), transparent 60%),
+      linear-gradient(165deg, var(--hero-emerald) 0%, var(--hero-mid) 45%, var(--hero-dark) 100%);
   }
-  .head-main { flex-direction: column; align-items: flex-start; padding: 0 20px; }
-  .contact { width: 100%; }
-  .contact .txt { font-size: var(--fs-lg); }
+  
+  .head-main { flex-direction: column; align-items: center; gap: 12px; width: 100%; padding: 0; }
+  .name-box { text-align: center; }
+  .head h1 { letter-spacing: 1.5px; }
+  .head h1 br { display: none; }
+  .job { margin-top: 6px; letter-spacing: 2px; }
+
+  /* two-column contact panel: phones left, email + address right */
+  .contact {
+    width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-flow: column;
+    gap: 0 10px;
+    padding: 8px 10px;
+    background: var(--hero-panel);
+    border: 1px solid var(--hero-panel-line);
+    border-radius: var(--radius-card);
+  }
+  .contact li {
+    min-width: 0;
+    margin: 0;
+    padding: 5px 0;
+    gap: 6px;
+    border-bottom: 0;
+  }
+  .contact li:first-child { order: 1; }           /* address goes under email */
+  .contact li.c-right { padding-left: 10px; border-left: 1px solid var(--hero-panel-line); justify-content: center;}
+  .contact li.c-left { justify-content: center; }
+  .contact .ico {
+    width: 22px;
+    height: 22px;
+    background: transparent;
+    border: 1.5px solid var(--hero-accent);
+    color: var(--hero-accent);
+  }
+  .contact .ico svg { width: 11px; height: 11px; }
+  .contact .txt { min-width: 0; font-size: 11.5px; line-height: 1.3; overflow-wrap: anywhere; }
+  .contact small { display: block; }
+
+  /* ----- BODY ----- */
   .side { background: var(--color-sidebar); padding: 28px 22px; }
-  .content { padding: 26px 20px; }
+  .side .btn { display: none; }                   /* one Download button (in footer) is enough */
+  .content { padding: 26px 20px; margin-top: 0; }
   .tl { grid-template-columns: 1fr; }
   .tl .left { padding-bottom: 6px; padding-left: 20px; }
   .tl .right { margin-left: 5px; }
   .grid2 { grid-template-columns: 1fr; }
-  .foot { flex-direction: column; align-items: flex-start; }
+
+  /* ----- FOOTER: text first, buttons below ----- */
+  .foot {
+    display: block;
+    text-align: center;
+    padding-bottom: calc(var(--space-5) + env(safe-area-inset-bottom));
+  }
+  .foot p { margin-bottom: var(--space-3); }
+  .foot-btns { justify-content: center; }
+  .foot-btns .btn { flex: 1 0 100%; justify-content: center; }
 }
 
 /* =====================================================================
