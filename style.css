@@ -10,17 +10,20 @@
   --color-sidebar: #444444;         /* left sidebar */
   --color-header: #228B22;          /* arrow header band (keep different from sidebar so the arrow shows) */
   --color-white: #ffffff;
-  --color-link-blue: #00fff7;                /* links in the content area */
+  --color-link-blue: #00fff7;       /* links in the content area */
+  --color-title: #58b6f9;           /* section titles (About Me, Work Experience ...) */
   --color-ink: #333333;             /* headings, dark text */
   --color-text: #777777;            /* normal text */
-  --color-text-soft: #555555;       /* company names, skill bars */
+  --color-text-soft: #555555;       /* company names, skill bullets */
   --color-line: #d9d9d9;            /* thin divider lines */
   --color-on-dark: #f1f1f1;         /* text on dark backgrounds */
   --color-on-dark-line: rgba(255, 255, 255, 0.28);
   --color-btn-hover: #222222;
-  --color-ring: #ff02ab;            /* language ring (filled part) */
+  --color-ring: green;            /* language ring (filled part) */
   --color-ring-track: #e2e2e2;      /* language ring (empty part) */
-  --color-hobby-icon: #5dff06;      /* hobby icons */
+  --color-photo-bg: #8a8a8a;        /* behind the photo / ADD PHOTO placeholder */
+  --color-overlay: rgba(0, 0, 0, 0.55);  /* dark background behind the contact popup */
+  --color-whatsapp: #128c7e;        /* WhatsApp button in the contact popup */
 
   /* ---------- FONTS ---------- */
   --font-body: "Lato", Arial, sans-serif;
@@ -47,6 +50,7 @@
   --radius-sm: 4px;
   --radius-pill: 30px;              /* buttons */
   --radius-round: 50%;              /* circles: photo, icons, rings */
+  --radius-card: 14px;              /* mobile contact panel, popup */
 
   /* ---------- SIZES ---------- */
   --side-w: 32%;                    /* sidebar width */
@@ -55,26 +59,23 @@
   --photo-size: 130px;
   --icon-btn-size: 38px;            /* round social buttons in footer */
   --contact-icon-size: 24px;        /* small icons in header */
-  --arrow-depth: 64px;              /* V arrow ki gehrai (kam/zyada kar sakte ho) */               /* arrow point under the header */
+  --arrow-depth: 64px;              /* depth of the V arrow under the header (smaller / bigger as you like) */
   --arrow-x: calc(var(--side-w) / 2); /* where the arrow sits (centre of sidebar) */
   --ring-size: 64px;                /* language ring */
   --ring-thickness: 8px;
   --lang-item-w: 96px;
-  --hobby-icon-size: 22px;
-  --hobby-item-w: 76px;
 
   /* ---------- SHADOWS ---------- */
   --shadow-cv: 0 6px 30px rgba(0, 0, 0, 0.25);
   --shadow-photo: 0 6px 18px rgba(0, 255, 60, 0.586);
 
-    /* ---------- MOBILE HEADER (luxury dark) ---------- */
+  /* ---------- MOBILE HEADER (luxury dark) ---------- */
   --hero-emerald: #0d4a37;
   --hero-mid: #0b2620;
   --hero-dark: #0c1113;
   --hero-accent: #34d399;
   --hero-panel: rgba(0, 0, 0, 0.32);
   --hero-panel-line: rgba(52, 211, 153, 0.28);
-  --radius-card: 14px;
 }
 
 /* ===== RESET ===== */
@@ -117,7 +118,7 @@ svg { fill: currentColor; }
   align-items: center;
   background: var(--color-header);
   color: var(--color-white);
-    padding: var(--space-5) 0 calc(var(--space-5) + var(--arrow-depth));
+  padding: var(--space-5) 0 calc(var(--space-5) + var(--arrow-depth));
   clip-path: polygon(
     0 0,
     100% 0,
@@ -206,7 +207,7 @@ svg { fill: currentColor; }
 .contact .ico svg { width: 13px; height: 13px; }
 .contact .txt { font-size: var(--fs-xs); text-decoration: none; color: var(--color-on-dark); }
 .contact .txt:hover { color: var(--color-link-blue); text-decoration: underline; }
-/* For email addresses, we want to show the full email on hover, so we use a different class */
+/* hover colour for the other links on the page */
 .txt:hover { color: rgb(0, 81, 255); text-decoration: underline; }
 .contact small { font-size: var(--fs-2xs); opacity: 0.85; }
 
@@ -243,28 +244,7 @@ svg { fill: currentColor; }
 
 .detail { margin-bottom: 6px; }
 
-/* ----- HOBBIES (icons + text, wraps automatically) ----- */
-.hobbies {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-4) var(--space-2);
-}
-.hobby {
-  flex: 0 0 var(--hobby-item-w);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  text-align: center;
-  font-size: var(--fs-xs);
-  line-height: 1.25;
-  color: var(--color-on-dark);
-}
-.hobby i { font-size: var(--hobby-icon-size); color: var(--color-hobby-icon); }
-
 /* ===== BUTTONS ===== */
-/* --- Core Button (Keeping your exact original shape & typography) --- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -275,69 +255,55 @@ svg { fill: currentColor; }
   font-weight: 700;
   font-size: var(--fs-lg);
   text-decoration: none;
-  border-radius: var(--radius-pill); /* Kept exactly as requested */
-  
-  /* Luxury Upgrades for the Hover Foundation */
+  border-radius: var(--radius-pill);
+
+  /* hover foundation */
   position: relative;
   overflow: hidden;
   z-index: 1;
-  border: 1px solid rgba(0, 0, 0, 0.05); /* Soft premium boundary line */
-  transition: color 0.5s cubic-bezier(0.25, 1, 0.5, 1), 
-              box-shadow 0.5s ease, 
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: color 0.5s cubic-bezier(0.25, 1, 0.5, 1),
+              box-shadow 0.5s ease,
               transform 0.4s ease;
 }
 
-/* Hardcoded override for when it's inside .content to keep baseline consistent */
-.content .btn { 
-  background: var(--color-sidebar); 
+/* button inside the main content (footer) */
+.content .btn {
+  background: var(--color-sidebar);
   color: var(--color-white);
   border: 1px solid rgba(255, 255, 255, 0.1);
-    margin-top: calc(var(--arrow-depth) * -1);
 }
 
-.btn svg { 
-  width: 16px; 
-  height: 16px; 
+.btn svg {
+  width: 16px;
+  height: 16px;
   fill: currentColor;
   position: relative;
   z-index: 2;
   transition: transform 0.4s ease;
 }
 
-/* --- The Luxury Hover Layer (Liquid Metallic Wave) --- */
+/* hover layer (orange wave rising from the bottom) */
 .btn::before {
   content: '';
   position: absolute;
-  top: 100%; /* Hidden just below the button */
+  top: 100%;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #FF6700; /* Elegant, muted champange gold */
+  background: #FF6700;
   z-index: -1;
   transition: top 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
+.content .btn::before { background: #FF6700; }
 
-/* Custom tone for the inside-content variant if you prefer dark hover there */
-.content .btn::before {
-  background: #FF6700; /* Or change to #fff for a crisp white slide-up */
+.btn:hover, .content .btn:hover {
+  color: #ffffff;
+  transform: translateY(-3px);
+  box-shadow: 0 12px 24px rgba(197, 168, 128, 0.25);
 }
-
-/* --- The Luxury Hover State --- */
-.btn:hover, .content .btn:hover { 
-  color: #ffffff; /* Smoothly changes text color as gold rises */
-  transform: translateY(-3px); /* Subtle premium lift */
-  box-shadow: 0 12px 24px rgba(197, 168, 128, 0.25); /* Gold tinted soft glow */
-}
-
-/* Triggers the gold liquid fill from the bottom up */
-.btn:hover::before, .content .btn:hover::before {
-  top: 0;
-}
-
-/* Micro-interaction for the CV download icon */
-.btn:hover svg {
-  transform: translateY(2px); /* Deliberate download nudge */
-}
+.btn:hover::before, .content .btn:hover::before { top: 0; }
+.btn:hover svg { transform: translateY(2px); }
 
 .round {
   display: inline-flex;
@@ -356,7 +322,11 @@ svg { fill: currentColor; }
 /* =====================================================================
    MAIN CONTENT
    ===================================================================== */
-.content { padding: var(--space-5) 36px var(--space-5) 26px; }
+/* negative top margin pulls the white content up under the arrow (desktop) */
+.content {
+  padding: var(--space-5) 36px var(--space-5) 26px;
+  margin-top: calc(var(--arrow-depth) * -1);
+}
 
 .block { margin-bottom: 26px; }
 .block h2 {
@@ -369,11 +339,8 @@ svg { fill: currentColor; }
   margin-bottom: 16px;
 }
 
-/* ----- BLOCK TITLE (for blocks that don't have h2) ----- */
-.block-title {
-color: #2c8bff !important; /* Deep navy for a professional look */
-
-}
+/* section titles colour (uses --color-title from :root) */
+.block-title { color: var(--color-title) !important; }
 
 /* ----- TIMELINE ----- */
 .tl {
@@ -411,11 +378,20 @@ color: #2c8bff !important; /* Deep navy for a professional look */
 .tl li { font-size: var(--fs-md); margin-bottom: 2px; padding-left: var(--space-3); position: relative; }
 .tl li::before { content: "\2022"; position: absolute; left: 0; }
 
-/* ----- SKILLS (bars) ----- */
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3) var(--space-6); }
-.skill { font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.3px; }
-.skill span { display: block; margin-bottom: var(--space-1); }
-.skill i { display: block; height: 4px; background: var(--color-text-soft); }
+/* ----- SKILLS (plain two-column list) ----- */
+.skills-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2) var(--space-6);
+}
+.skills-list li {
+  position: relative;
+  padding-left: var(--space-3);
+  font-size: var(--fs-md);
+  color: var(--color-text-soft);
+}
+.skills-list li::before { content: "\2022"; position: absolute; left: 0; }
 
 /* ----- LANGUAGES (round progress rings) ----- */
 .langs { display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-3); }
@@ -456,10 +432,66 @@ color: #2c8bff !important; /* Deep navy for a professional look */
 }
 .foot-btns { display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap; }
 
+/* ----- CONTACT CHOOSER POPUP (WhatsApp / Phone call) ----- */
+.chooser {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: var(--color-overlay);
+}
+.chooser[hidden] { display: none; }
+.chooser-card {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  padding: var(--space-5);
+  background: var(--color-white);
+  color: var(--color-ink);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-cv);
+  text-align: center;
+}
+.chooser-card h2 {
+  font: 600 var(--fs-xl) / 1.2 var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.chooser-card p { margin: var(--space-1) 0 var(--space-4); font-size: var(--fs-lg); color: var(--color-text); }
+.chooser-close {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-3);
+  border: 0;
+  background: none;
+  font-size: 24px;
+  line-height: 1;
+  color: var(--color-text);
+  cursor: pointer;
+}
+.chooser-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  text-decoration: none;
+  color: var(--color-white);
+}
+.chooser-btn svg { width: 18px; height: 18px; }
+.chooser-wa { background: var(--color-whatsapp); }
+.chooser-call { background: var(--color-sidebar); }
+
 /* =====================================================================
-   MOBILE
+   MOBILE (screen only, so printing always gives the desktop A4 layout)
    ===================================================================== */
- @media (max-width: 780px) {
+@media screen and (max-width: 780px) {
   :root {
     --arrow-x: 50%;
     --photo-size: 96px;
@@ -487,20 +519,20 @@ color: #2c8bff !important; /* Deep navy for a professional look */
       radial-gradient(110% 70% at 0% 0%, rgba(52, 211, 153, 0.22), transparent 60%),
       linear-gradient(165deg, var(--hero-emerald) 0%, var(--hero-mid) 45%, var(--hero-dark) 100%);
   }
-  
+
   .head-main { flex-direction: column; align-items: center; gap: 12px; width: 100%; padding: 0; }
   .name-box { text-align: center; }
   .head h1 { letter-spacing: 1.5px; }
   .head h1 br { display: none; }
   .job { margin-top: 6px; letter-spacing: 2px; }
 
-  /* two-column contact panel: phones left, email + address right */
+  /* two-column contact panel: phone on the left, email + address on the right */
   .contact {
     width: 100%;
     min-width: 0;
     display: grid;
-    grid-template-rows: repeat(2, auto);
-    grid-auto-flow: column;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
     gap: 0 10px;
     padding: 8px 10px;
     background: var(--hero-panel);
@@ -514,9 +546,10 @@ color: #2c8bff !important; /* Deep navy for a professional look */
     gap: 6px;
     border-bottom: 0;
   }
-  .contact li:first-child { order: 1; }           /* address goes under email */
-  .contact li.c-right { padding-left: 10px; border-left: 1px solid var(--hero-panel-line); justify-content: center;}
-  .contact li.c-left { justify-content: center; }
+  .contact li.c-left { grid-column: 1; grid-row: 1 / span 2; align-self: center; justify-content: center; }
+  .contact li.c-right { grid-column: 2; padding-left: 10px; border-left: 1px solid var(--hero-panel-line); justify-content: center; }
+  .contact li.c-mail { grid-row: 1; }
+  .contact li.c-addr { grid-row: 2; }
   .contact .ico {
     width: 22px;
     height: 22px;
@@ -535,7 +568,7 @@ color: #2c8bff !important; /* Deep navy for a professional look */
   .tl { grid-template-columns: 1fr; }
   .tl .left { padding-bottom: 6px; padding-left: 20px; }
   .tl .right { margin-left: 5px; }
-  .grid2 { grid-template-columns: 1fr; }
+  .skills-list { grid-template-columns: 1fr; }
 
   /* ----- FOOTER: text first, buttons below ----- */
   .foot {
@@ -549,7 +582,7 @@ color: #2c8bff !important; /* Deep navy for a professional look */
 }
 
 /* =====================================================================
-   PRINT / SAVE AS PDF (A4)
+   PRINT / SAVE AS PDF (A4, desktop layout, 2 pages)
    ===================================================================== */
 @page { size: A4; margin: 0; }
 
@@ -577,4 +610,7 @@ color: #2c8bff !important; /* Deep navy for a professional look */
   .tl .left { font-size: 10px; }
   .side p, .link-list li { font-size: var(--fs-xs); }
   .foot { justify-content: center; }
+  /* keep small blocks together across the page break */
+  .s-block, .lang { break-inside: avoid; }
+  .block h2, .side h2 { break-after: avoid; }
 }
