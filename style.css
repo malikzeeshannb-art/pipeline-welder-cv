@@ -137,7 +137,6 @@ svg { fill: currentColor; }
   height: var(--photo-size);
   border-radius: var(--radius-round);
   overflow: hidden;
-  background: var(--color-photo-bg);
   box-shadow: inset var(--shadow-photo);
 }
 .photo img {
